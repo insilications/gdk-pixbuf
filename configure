@@ -1,0 +1,10 @@
+ --disable-introspection
+ --disable-installed-tests
+ --enable-nls
+ --disable-gio-sniffing
+ --with-libjpeg
+ --without-libjasper 
+ --with-libpng 
+ --without-libtiff 
+ --with-x11 
+ --disable-static
