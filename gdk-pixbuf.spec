@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.32.3
-Release  : 16
+Release  : 17
 URL      : http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.32/gdk-pixbuf-2.32.3.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.32/gdk-pixbuf-2.32.3.tar.xz
 Summary  : Image loading and scaling, Not Installed
@@ -19,6 +19,7 @@ BuildRequires : gettext
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
 BuildRequires : libjpeg-turbo-dev
+BuildRequires : librsvg
 BuildRequires : libxslt-bin
 BuildRequires : perl(XML::Parser)
 BuildRequires : pkgconfig(glib-2.0)
@@ -101,7 +102,7 @@ rm -rf %{buildroot}
 %make_install
 %find_lang gdk-pixbuf
 ## make_install_append content
-LD_LIBRARY_PATH=%{buildroot}%{_libdir} %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*.so | sed "s@%{buildroot}@@g" > %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache
+cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/. ; LD_LIBRARY_PATH=%{buildroot}%{_libdir} %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*.so | sed "s@%{buildroot}@@g" > %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache ; rm %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so
 ## make_install_append end
 
 %files
