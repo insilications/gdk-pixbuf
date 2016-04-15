@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.32.3
-Release  : 17
+Release  : 18
 URL      : http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.32/gdk-pixbuf-2.32.3.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.32/gdk-pixbuf-2.32.3.tar.xz
 Summary  : Image loading and scaling, Not Installed
@@ -76,9 +76,17 @@ locales components for the gdk-pixbuf package.
 
 
 %prep
+cd ..
 %setup -q -n gdk-pixbuf-2.32.3
 
 %build
+export AR=gcc-ar
+export RANLIB=gcc-ranlib
+export NM=gcc-nm
+export CFLAGS="$CFLAGS -falign-functions=32 -O3 -fno-semantic-interposition -flto "
+export FCFLAGS="$CFLAGS -falign-functions=32 -O3 -fno-semantic-interposition -flto "
+export FFLAGS="$CFLAGS -falign-functions=32 -O3 -fno-semantic-interposition -flto "
+export CXXFLAGS="$CXXFLAGS -falign-functions=32 -O3 -fno-semantic-interposition -flto "
 %configure --disable-static --disable-introspection \
 --disable-installed-tests \
 --enable-nls \
