@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.32.3
-Release  : 19
+Release  : 20
 URL      : http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.32/gdk-pixbuf-2.32.3.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.32/gdk-pixbuf-2.32.3.tar.xz
 Summary  : Image loading and scaling, Not Installed
