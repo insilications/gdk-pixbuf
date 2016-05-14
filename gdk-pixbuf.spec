@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.32.3
-Release  : 20
+Release  : 21
 URL      : http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.32/gdk-pixbuf-2.32.3.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.32/gdk-pixbuf-2.32.3.tar.xz
 Summary  : Image loading and scaling, Not Installed
@@ -12,10 +12,13 @@ Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
 Requires: gdk-pixbuf-bin
 Requires: gdk-pixbuf-lib
+Requires: gdk-pixbuf-data
 Requires: gdk-pixbuf-doc
 Requires: gdk-pixbuf-locales
 BuildRequires : docbook-xml
 BuildRequires : gettext
+BuildRequires : gobject-introspection
+BuildRequires : gobject-introspection-dev
 BuildRequires : gtk-doc
 BuildRequires : gtk-doc-dev
 BuildRequires : libjpeg-turbo-dev
@@ -35,9 +38,18 @@ BuildRequires : qemu
 %package bin
 Summary: bin components for the gdk-pixbuf package.
 Group: Binaries
+Requires: gdk-pixbuf-data
 
 %description bin
 bin components for the gdk-pixbuf package.
+
+
+%package data
+Summary: data components for the gdk-pixbuf package.
+Group: Data
+
+%description data
+data components for the gdk-pixbuf package.
 
 
 %package dev
@@ -45,6 +57,7 @@ Summary: dev components for the gdk-pixbuf package.
 Group: Development
 Requires: gdk-pixbuf-lib
 Requires: gdk-pixbuf-bin
+Requires: gdk-pixbuf-data
 Provides: gdk-pixbuf-devel
 
 %description dev
@@ -62,6 +75,7 @@ doc components for the gdk-pixbuf package.
 %package lib
 Summary: lib components for the gdk-pixbuf package.
 Group: Libraries
+Requires: gdk-pixbuf-data
 
 %description lib
 lib components for the gdk-pixbuf package.
@@ -76,7 +90,6 @@ locales components for the gdk-pixbuf package.
 
 
 %prep
-cd ..
 %setup -q -n gdk-pixbuf-2.32.3
 
 %build
@@ -87,7 +100,7 @@ export CFLAGS="$CFLAGS -falign-functions=32 -O3 -fno-semantic-interposition -flt
 export FCFLAGS="$CFLAGS -falign-functions=32 -O3 -fno-semantic-interposition -flto "
 export FFLAGS="$CFLAGS -falign-functions=32 -O3 -fno-semantic-interposition -flto "
 export CXXFLAGS="$CXXFLAGS -falign-functions=32 -O3 -fno-semantic-interposition -flto "
-%configure --disable-static --disable-introspection \
+%configure --disable-static --enable-introspection \
 --disable-installed-tests \
 --enable-nls \
 --disable-gio-sniffing \
@@ -123,6 +136,10 @@ cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/g
 /usr/bin/gdk-pixbuf-pixdata
 /usr/bin/gdk-pixbuf-query-loaders
 
+%files data
+%defattr(-,root,root,-)
+/usr/share/gir-1.0/GdkPixbuf-2.0.gir
+
 %files dev
 %defattr(-,root,root,-)
 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf-xlib/gdk-pixbuf-xlib.h
@@ -140,6 +157,7 @@ cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/g
 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h
 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixdata.h
 /usr/lib64/*.so
+/usr/lib64/girepository-1.0/GdkPixbuf-2.0.typelib
 /usr/lib64/pkgconfig/*.pc
 
 %files doc

@@ -1,4 +1,4 @@
- --disable-introspection
+ --enable-introspection
  --disable-installed-tests
  --enable-nls
  --disable-gio-sniffing

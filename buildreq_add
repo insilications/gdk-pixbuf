@@ -4,3 +4,6 @@
 #
 qemu
 librsvg
+gobject-introspection-dev
+gobject-introspection
+libjpeg-turbo-dev
