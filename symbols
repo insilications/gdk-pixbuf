@@ -26,6 +26,7 @@ libgdk_pixbuf-2.0.so.0:gdk_pixbuf_composite_color
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_composite_color_simple
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_copy
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_copy_area
+libgdk_pixbuf-2.0.so.0:gdk_pixbuf_copy_options
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_error_get_type
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_error_quark
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_fill
@@ -39,6 +40,7 @@ libgdk_pixbuf-2.0.so.0:gdk_pixbuf_format_get_mime_types
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_format_get_name
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_format_get_type
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_format_is_disabled
+libgdk_pixbuf-2.0.so.0:gdk_pixbuf_format_is_save_option_supported
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_format_is_scalable
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_format_is_writable
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_format_set_disabled
@@ -93,6 +95,7 @@ libgdk_pixbuf-2.0.so.0:gdk_pixbuf_non_anim_new
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_read_pixel_bytes
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_read_pixels
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_ref
+libgdk_pixbuf-2.0.so.0:gdk_pixbuf_remove_option
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_rotate_simple
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_rotation_get_type
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_saturate_and_pixelate
@@ -104,6 +107,8 @@ libgdk_pixbuf-2.0.so.0:gdk_pixbuf_save_to_callbackv
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_save_to_stream
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_save_to_stream_async
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_save_to_stream_finish
+libgdk_pixbuf-2.0.so.0:gdk_pixbuf_save_to_streamv
+libgdk_pixbuf-2.0.so.0:gdk_pixbuf_save_to_streamv_async
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_savev
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_scale
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_scale_simple

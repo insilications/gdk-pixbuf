@@ -1,14 +1,61 @@
-2.32.3
+2.35.5
+======
+
+* Fix undefined behavior in overflow checks (#770986)
+* Fix a typo (#770756)
+* Avoid segfault in some tests (#771026)
+* Translation updates
+
+2.35.4
+======
+
+* Translation updates
+
+2.35.3
+======
+
+* Add API to determine supported save options (#683371)
+* Add helper API for pixbuf options (#768043)
+* Fix invalid gettext use (#758552)
+* Fix a compiler warning in the xpm loader (#768042)
+* Fix integer overflows in the bmp loader (#768688, #768738)
+* Fix a crash in the ico loader (#769170)
+* Translation updates
+
+2.35.2
+======
+
+* Use compiler directives for exporting symbols (#767164)
+* Fix a problem with nearest scaling (#766842)
+* Avoid redundant property notification
+* Translation updates
+
+2.35.1
+======
+
+* Add non-varargs variant to save to stream (#683063)
+* Add a common autotools module (#765034)
+* Translation updates
+
+2.34.0
+======
+
+* Don't force no static builds on Win32 (#760369)
+* Translation updates
+
+2.33.2
 ======
 
 * Fix two crashes in the bmp loader (#747605, #758991)
-* ico: integer overflow fixes
 * Translation updates
 
-2.32.2
+2.33.1
 ======
 
-* Avoid some integer overflow possibilities in scaling code
+* Improve various tests
+* ico: integer overflow fixes
+* tga: rewrite the loader, introducing a buffer queue abstraction
+* gif: fix thumbnailing animations
 * Translation updates
 
 2.32.1
