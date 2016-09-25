@@ -4,12 +4,12 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.36.0
-Release  : 23
+Release  : 24
 URL      : http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.0.tar.xz
 Source0  : http://ftp.gnome.org/pub/GNOME/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.0.tar.xz
 Summary  : Image loading and scaling, Not Installed
 Group    : Development/Tools
-License  : GPL-2.0 LGPL-2.0
+License  : GPL-2.0 LGPL-2.0 LGPL-2.1
 Requires: gdk-pixbuf-bin
 Requires: gdk-pixbuf-lib
 Requires: gdk-pixbuf-data
@@ -97,10 +97,10 @@ export LANG=C
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -fno-semantic-interposition -O3 -falign-functions=32 "
-export FCFLAGS="$CFLAGS -fno-semantic-interposition -O3 -falign-functions=32 "
-export FFLAGS="$CFLAGS -fno-semantic-interposition -O3 -falign-functions=32 "
-export CXXFLAGS="$CXXFLAGS -fno-semantic-interposition -O3 -falign-functions=32 "
+export CFLAGS="$CFLAGS -O3 -flto -falign-functions=32 -fno-semantic-interposition "
+export FCFLAGS="$CFLAGS -O3 -flto -falign-functions=32 -fno-semantic-interposition "
+export FFLAGS="$CFLAGS -O3 -flto -falign-functions=32 -fno-semantic-interposition "
+export CXXFLAGS="$CXXFLAGS -O3 -flto -falign-functions=32 -fno-semantic-interposition "
 %configure --disable-static --enable-introspection \
 --disable-installed-tests \
 --enable-nls \
