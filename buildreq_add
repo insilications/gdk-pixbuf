@@ -9,3 +9,5 @@ gobject-introspection
 libjpeg-turbo-dev
 libjpeg-turbo-dev32
 libpng-dev32
+librsvg-dev
+librsvg-dev32
