@@ -62,7 +62,6 @@ libgdk_pixbuf-2.0.so.0:gdk_pixbuf_get_pixels_with_length
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_get_rowstride
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_get_type
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_get_width
-libgdk_pixbuf-2.0.so.0:gdk_pixbuf_gettext
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_loader_close
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_loader_get_animation
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_loader_get_format
@@ -112,8 +111,6 @@ libgdk_pixbuf-2.0.so.0:gdk_pixbuf_save_to_streamv_async
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_savev
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_scale
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_scale_simple
-libgdk_pixbuf-2.0.so.0:gdk_pixbuf_scaled_anim_get_type
-libgdk_pixbuf-2.0.so.0:gdk_pixbuf_scaled_anim_iter_get_type
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_set_option
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_simple_anim_add_frame
 libgdk_pixbuf-2.0.so.0:gdk_pixbuf_simple_anim_get_loop
