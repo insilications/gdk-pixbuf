@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.36.6
-Release  : 33
+Release  : 34
 URL      : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz
 Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz
 Summary  : Image loading and scaling, Not Installed
@@ -130,7 +130,7 @@ popd
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1491315263
+export SOURCE_DATE_EPOCH=1491316309
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -175,7 +175,7 @@ export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1491315263
+export SOURCE_DATE_EPOCH=1491316309
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
