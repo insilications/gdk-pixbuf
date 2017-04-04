@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.36.6
-Release  : 32
+Release  : 33
 URL      : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz
 Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz
 Summary  : Image loading and scaling, Not Installed
@@ -12,9 +12,9 @@ Group    : Development/Tools
 License  : GPL-2.0 LGPL-2.0
 Requires: gdk-pixbuf-bin
 Requires: gdk-pixbuf-lib
+Requires: gdk-pixbuf-data
 Requires: gdk-pixbuf-doc
 Requires: gdk-pixbuf-locales
-Requires: gdk-pixbuf-data
 BuildRequires : docbook-xml
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
@@ -130,7 +130,7 @@ popd
 
 %build
 export LANG=C
-export SOURCE_DATE_EPOCH=1490621934
+export SOURCE_DATE_EPOCH=1491315263
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -175,7 +175,7 @@ export no_proxy=localhost
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1490621934
+export SOURCE_DATE_EPOCH=1491315263
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
@@ -207,6 +207,8 @@ cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/g
 
 %files data
 %defattr(-,root,root,-)
+/usr/lib64/girepository-1.0/GdkPixbuf-2.0.typelib
+/usr/share/gir-1.0/*.gir
 /usr/share/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
 
 %files dev
@@ -226,12 +228,10 @@ cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/g
 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf-transform.h
 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixbuf.h
 /usr/include/gdk-pixbuf-2.0/gdk-pixbuf/gdk-pixdata.h
-/usr/lib64/girepository-1.0/GdkPixbuf-2.0.typelib
 /usr/lib64/libgdk_pixbuf-2.0.so
 /usr/lib64/libgdk_pixbuf_xlib-2.0.so
 /usr/lib64/pkgconfig/gdk-pixbuf-2.0.pc
 /usr/lib64/pkgconfig/gdk-pixbuf-xlib-2.0.pc
-/usr/share/gir-1.0/*.gir
 
 %files dev32
 %defattr(-,root,root,-)
