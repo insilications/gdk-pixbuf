@@ -1,0 +1,29 @@
+--- gdk-pixbuf-2.36.6/gdk-pixbuf/gdk-pixbuf.c~	2017-03-26 11:12:32.000000000 +0000
++++ gdk-pixbuf-2.36.6/gdk-pixbuf/gdk-pixbuf.c	2017-04-29 15:26:45.662990401 +0000
+@@ -26,6 +26,7 @@
+ #include <math.h>
+ #include <stdlib.h>
+ #include <string.h>
++#include <sys/mman.h>
+ 
+ #define GDK_PIXBUF_C_COMPILATION
+ #include "gdk-pixbuf-private.h"
+@@ -446,6 +447,7 @@
+ 	guchar *buf;
+ 	unsigned int channels;
+ 	unsigned int rowstride;
++	unsigned long bufa;
+ 
+ 	g_return_val_if_fail (colorspace == GDK_COLORSPACE_RGB, NULL);
+ 	g_return_val_if_fail (bits_per_sample == 8, NULL);
+@@ -465,6 +467,10 @@
+ 	if (!buf)
+ 		return NULL;
+ 
++	bufa = (unsigned long)buf;
++	bufa = bufa & (~4095);
++	madvise((void *)bufa, height * rowstride, MADV_MERGEABLE);
++
+ 	return gdk_pixbuf_new_from_data (buf, colorspace, has_alpha, bits_per_sample,
+ 					 width, height, rowstride,
+ 					 free_buffer, NULL);

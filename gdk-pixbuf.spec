@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.36.6
-Release  : 34
+Release  : 35
 URL      : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz
 Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.6.tar.xz
 Summary  : Image loading and scaling, Not Installed
@@ -43,6 +43,7 @@ BuildRequires : pkgconfig(libffi)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(x11)
 BuildRequires : qemu
+Patch1: madvise.patch
 
 %description
 
@@ -124,13 +125,17 @@ locales components for the gdk-pixbuf package.
 
 %prep
 %setup -q -n gdk-pixbuf-2.36.6
+%patch1 -p1
 pushd ..
 cp -a gdk-pixbuf-2.36.6 build32
 popd
 
 %build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1491316309
+export SOURCE_DATE_EPOCH=1493479962
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -171,11 +176,11 @@ popd
 export LANG=C
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
-export no_proxy=localhost
+export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
 
 %install
-export SOURCE_DATE_EPOCH=1491316309
+export SOURCE_DATE_EPOCH=1493479962
 rm -rf %{buildroot}
 pushd ../build32/
 %make_install32
