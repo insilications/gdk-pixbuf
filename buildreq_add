@@ -11,3 +11,5 @@ libjpeg-turbo-dev32
 libpng-dev32
 librsvg-dev
 librsvg-dev32
+zlib-dev32
+zlib-dev
