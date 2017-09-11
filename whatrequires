@@ -1,0 +1,10 @@
+# This file contains recursive sources that require this package
+adwaita-icon-theme-0:3.25.4-11.src
+cheese-0:3.24.0-2.src
+faba-icon-theme-0:4.1.2-11.src
+gimp-0:2.8.22-21.src
+gst-plugins-good-0:1.12.2-20.src
+gtk+-0:2.24.31-20.src
+hexchat-0:2.12.4-15.src
+moka-icon-theme-0:5.3.6-13.src
+totem-0:3.24.0-3.src
