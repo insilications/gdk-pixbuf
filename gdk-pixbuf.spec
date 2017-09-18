@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.36.10
-Release  : 42
+Release  : 43
 URL      : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.10.tar.xz
 Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.10.tar.xz
 Summary  : Image loading and scaling
