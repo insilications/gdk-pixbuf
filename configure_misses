@@ -2,11 +2,10 @@ Configure miss: mediaLib 2.3... checking for mlib_ImageSetStruct in -lmlib
 Configure miss: x86 platform
 Configure miss: whether to build with gcov testing
 Configure miss: whether to build with application bundle relocation support
-Configure miss: i686-generic-linux-gnu-pkg-config
-Configure miss: i686-generic-linux-gnu-objdump
-Configure miss: i686-generic-linux-gnu-dlltool
-Configure miss: i686-generic-linux-gnu-strip
-Configure miss: i686-generic-linux-gnu-mt
 Configure miss: mediaLib 2.3... checking for mlib_ImageSetStruct in -lmlib
+Configure miss: whether to build with gcov testing
+Configure miss: whether to build with application bundle relocation support
+Configure miss: mediaLib 2.3... checking for mlib_ImageSetStruct in -lmlib
+Configure miss: x86 platform
 Configure miss: whether to build with gcov testing
 Configure miss: whether to build with application bundle relocation support
