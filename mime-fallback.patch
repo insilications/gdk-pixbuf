@@ -1,0 +1,23 @@
+--- gdk-pixbuf-2.36.12/gdk-pixbuf/gdk-pixbuf-io.c~	2018-04-07 10:29:11.000000000 +0000
++++ gdk-pixbuf-2.36.12/gdk-pixbuf/gdk-pixbuf-io.c	2019-01-15 16:48:14.917136550 +0000
+@@ -896,7 +896,10 @@
+ 		}
+         }
+         g_free (mime_type);
+-#else
++#endif
++	if (selected != NULL)
++		return selected;
++
+         gint score, best = 0;
+ 
+         for (modules = get_file_formats (); modules; modules = g_slist_next (modules)) {
+@@ -913,7 +916,7 @@
+                 if (score >= 100) 
+                         break;
+         }
+-#endif
++
+ 
+         if (selected != NULL)
+                 return selected;

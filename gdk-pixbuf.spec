@@ -4,20 +4,23 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.36.12
-Release  : 53
+Release  : 54
 URL      : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.12.tar.xz
 Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.12.tar.xz
-Summary  : Image loading and scaling
+Summary  : Image loading and manipulation library
 Group    : Development/Tools
 License  : LGPL-2.0
-Requires: gdk-pixbuf-bin
-Requires: gdk-pixbuf-lib
-Requires: gdk-pixbuf-data
-Requires: gdk-pixbuf-doc
-Requires: gdk-pixbuf-locales
+Requires: gdk-pixbuf-bin = %{version}-%{release}
+Requires: gdk-pixbuf-data = %{version}-%{release}
+Requires: gdk-pixbuf-lib = %{version}-%{release}
+Requires: gdk-pixbuf-license = %{version}-%{release}
+Requires: gdk-pixbuf-locales = %{version}-%{release}
+Requires: gdk-pixbuf-man = %{version}-%{release}
 Requires: shared-mime-info
 BuildRequires : automake
 BuildRequires : automake-dev
+BuildRequires : buildreq-gnome
+BuildRequires : buildreq-meson
 BuildRequires : docbook-xml
 BuildRequires : gcc-dev32
 BuildRequires : gcc-libgcc32
@@ -40,9 +43,9 @@ BuildRequires : libtool
 BuildRequires : libtool-dev
 BuildRequires : libxslt-bin
 BuildRequires : m4
-BuildRequires : meson
-BuildRequires : ninja
+BuildRequires : perl
 BuildRequires : perl(XML::Parser)
+BuildRequires : pkg-config
 BuildRequires : pkg-config-dev
 BuildRequires : pkgconfig(32glib-2.0)
 BuildRequires : pkgconfig(32gobject-2.0)
@@ -53,11 +56,11 @@ BuildRequires : pkgconfig(libffi)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(shared-mime-info)
 BuildRequires : pkgconfig(x11)
-BuildRequires : python3
 BuildRequires : qemu
 BuildRequires : zlib-dev
 BuildRequires : zlib-dev32
 Patch1: notiff.patch
+Patch2: mime-fallback.patch
 
 %description
 
@@ -65,7 +68,9 @@ Patch1: notiff.patch
 %package bin
 Summary: bin components for the gdk-pixbuf package.
 Group: Binaries
-Requires: gdk-pixbuf-data
+Requires: gdk-pixbuf-data = %{version}-%{release}
+Requires: gdk-pixbuf-license = %{version}-%{release}
+Requires: gdk-pixbuf-man = %{version}-%{release}
 
 %description bin
 bin components for the gdk-pixbuf package.
@@ -82,10 +87,10 @@ data components for the gdk-pixbuf package.
 %package dev
 Summary: dev components for the gdk-pixbuf package.
 Group: Development
-Requires: gdk-pixbuf-lib
-Requires: gdk-pixbuf-bin
-Requires: gdk-pixbuf-data
-Provides: gdk-pixbuf-devel
+Requires: gdk-pixbuf-lib = %{version}-%{release}
+Requires: gdk-pixbuf-bin = %{version}-%{release}
+Requires: gdk-pixbuf-data = %{version}-%{release}
+Provides: gdk-pixbuf-devel = %{version}-%{release}
 
 %description dev
 dev components for the gdk-pixbuf package.
@@ -94,10 +99,10 @@ dev components for the gdk-pixbuf package.
 %package dev32
 Summary: dev32 components for the gdk-pixbuf package.
 Group: Default
-Requires: gdk-pixbuf-lib32
-Requires: gdk-pixbuf-bin
-Requires: gdk-pixbuf-data
-Requires: gdk-pixbuf-dev
+Requires: gdk-pixbuf-lib32 = %{version}-%{release}
+Requires: gdk-pixbuf-bin = %{version}-%{release}
+Requires: gdk-pixbuf-data = %{version}-%{release}
+Requires: gdk-pixbuf-dev = %{version}-%{release}
 
 %description dev32
 dev32 components for the gdk-pixbuf package.
@@ -106,6 +111,7 @@ dev32 components for the gdk-pixbuf package.
 %package doc
 Summary: doc components for the gdk-pixbuf package.
 Group: Documentation
+Requires: gdk-pixbuf-man = %{version}-%{release}
 
 %description doc
 doc components for the gdk-pixbuf package.
@@ -114,7 +120,8 @@ doc components for the gdk-pixbuf package.
 %package lib
 Summary: lib components for the gdk-pixbuf package.
 Group: Libraries
-Requires: gdk-pixbuf-data
+Requires: gdk-pixbuf-data = %{version}-%{release}
+Requires: gdk-pixbuf-license = %{version}-%{release}
 
 %description lib
 lib components for the gdk-pixbuf package.
@@ -123,10 +130,19 @@ lib components for the gdk-pixbuf package.
 %package lib32
 Summary: lib32 components for the gdk-pixbuf package.
 Group: Default
-Requires: gdk-pixbuf-data
+Requires: gdk-pixbuf-data = %{version}-%{release}
+Requires: gdk-pixbuf-license = %{version}-%{release}
 
 %description lib32
 lib32 components for the gdk-pixbuf package.
+
+
+%package license
+Summary: license components for the gdk-pixbuf package.
+Group: Default
+
+%description license
+license components for the gdk-pixbuf package.
 
 
 %package locales
@@ -137,9 +153,18 @@ Group: Default
 locales components for the gdk-pixbuf package.
 
 
+%package man
+Summary: man components for the gdk-pixbuf package.
+Group: Default
+
+%description man
+man components for the gdk-pixbuf package.
+
+
 %prep
 %setup -q -n gdk-pixbuf-2.36.12
 %patch1 -p1
+%patch2 -p1
 pushd ..
 cp -a gdk-pixbuf-2.36.12 build32
 popd
@@ -149,7 +174,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1527272212
+export SOURCE_DATE_EPOCH=1547571255
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -170,6 +195,7 @@ export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -f
 make  %{?_smp_mflags}
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
+export ASFLAGS="$ASFLAGS --32"
 export CFLAGS="$CFLAGS -m32"
 export CXXFLAGS="$CXXFLAGS -m32"
 export LDFLAGS="$LDFLAGS -m32"
@@ -192,10 +218,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 make VERBOSE=1 V=1 %{?_smp_mflags} check || :
+cd ../build32;
+make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1527272212
+export SOURCE_DATE_EPOCH=1547571255
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/gdk-pixbuf
+cp COPYING %{buildroot}/usr/share/package-licenses/gdk-pixbuf/COPYING
+cp docs/reference/gdk-pixbuf/html/license.html %{buildroot}/usr/share/package-licenses/gdk-pixbuf/docs_reference_gdk-pixbuf_html_license.html
 pushd ../build32/
 %make_install32
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
@@ -207,12 +238,12 @@ fi
 popd
 %make_install
 %find_lang gdk-pixbuf
-## make_install_append content
+## install_append content
 cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/.
 LD_LIBRARY_PATH=%{buildroot}%{_libdir} %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*.so | sed "s@%{buildroot}@@g" > %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache
 rm %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so
 sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache > %{buildroot}/usr/lib32/gdk-pixbuf-2.0/2.10.0/loaders.cache
-## make_install_append end
+## install_append end
 
 %files
 %defattr(-,root,root,-)
@@ -265,8 +296,7 @@ sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.ca
 /usr/lib32/pkgconfig/gdk-pixbuf-xlib-2.0.pc
 
 %files doc
-%defattr(-,root,root,-)
-%doc /usr/share/man/man1/*
+%defattr(0644,root,root,0755)
 /usr/share/gtk-doc/html/gdk-pixbuf/GdkPixbufLoader.html
 /usr/share/gtk-doc/html/gdk-pixbuf/annotation-glossary.html
 /usr/share/gtk-doc/html/gdk-pixbuf/api-index-full.html
@@ -341,6 +371,16 @@ sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.ca
 /usr/lib32/libgdk_pixbuf-2.0.so.0.3612.0
 /usr/lib32/libgdk_pixbuf_xlib-2.0.so.0
 /usr/lib32/libgdk_pixbuf_xlib-2.0.so.0.3612.0
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/gdk-pixbuf/COPYING
+/usr/share/package-licenses/gdk-pixbuf/docs_reference_gdk-pixbuf_html_license.html
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/gdk-pixbuf-csource.1
+/usr/share/man/man1/gdk-pixbuf-query-loaders.1
 
 %files locales -f gdk-pixbuf.lang
 %defattr(-,root,root,-)
