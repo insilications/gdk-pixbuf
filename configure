@@ -8,3 +8,4 @@
  --without-libtiff 
  --with-x11 
  --disable-static
+ --enable-explicit-deps=yes

@@ -1,5 +1,6 @@
 # This file contains recursive sources that require this package
 adwaita-icon-theme
+arc-theme
 cheese
 gedit
 gimp
@@ -8,3 +9,4 @@ gst-plugins-good
 gtk+
 hexchat
 libmediaart
+rhythmbox

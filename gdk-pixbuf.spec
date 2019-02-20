@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.36.12
-Release  : 54
+Release  : 55
 URL      : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.12.tar.xz
 Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.12.tar.xz
 Summary  : Image loading and manipulation library
@@ -91,6 +91,7 @@ Requires: gdk-pixbuf-lib = %{version}-%{release}
 Requires: gdk-pixbuf-bin = %{version}-%{release}
 Requires: gdk-pixbuf-data = %{version}-%{release}
 Provides: gdk-pixbuf-devel = %{version}-%{release}
+Requires: gdk-pixbuf = %{version}-%{release}
 
 %description dev
 dev components for the gdk-pixbuf package.
@@ -174,7 +175,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1547571255
+export SOURCE_DATE_EPOCH=1550635434
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -191,7 +192,8 @@ export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -f
 --with-libpng \
 --without-libtiff \
 --with-x11 \
---disable-static
+--disable-static \
+--enable-explicit-deps=yes
 make  %{?_smp_mflags}
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
@@ -208,7 +210,8 @@ export LDFLAGS="$LDFLAGS -m32"
 --with-libpng \
 --without-libtiff \
 --with-x11 \
---disable-static  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
+--disable-static \
+--enable-explicit-deps=yes  --libdir=/usr/lib32 --build=i686-generic-linux-gnu --host=i686-generic-linux-gnu --target=i686-clr-linux-gnu
 make  %{?_smp_mflags}
 popd
 
@@ -222,7 +225,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1547571255
+export SOURCE_DATE_EPOCH=1550635434
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gdk-pixbuf
 cp COPYING %{buildroot}/usr/share/package-licenses/gdk-pixbuf/COPYING
