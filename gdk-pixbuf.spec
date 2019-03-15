@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.36.12
-Release  : 55
+Release  : 56
 URL      : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.12.tar.xz
 Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.36/gdk-pixbuf-2.36.12.tar.xz
 Summary  : Image loading and manipulation library
@@ -16,6 +16,7 @@ Requires: gdk-pixbuf-lib = %{version}-%{release}
 Requires: gdk-pixbuf-license = %{version}-%{release}
 Requires: gdk-pixbuf-locales = %{version}-%{release}
 Requires: gdk-pixbuf-man = %{version}-%{release}
+Requires: librsvg-lib
 Requires: shared-mime-info
 BuildRequires : automake
 BuildRequires : automake-dev
@@ -70,7 +71,6 @@ Summary: bin components for the gdk-pixbuf package.
 Group: Binaries
 Requires: gdk-pixbuf-data = %{version}-%{release}
 Requires: gdk-pixbuf-license = %{version}-%{release}
-Requires: gdk-pixbuf-man = %{version}-%{release}
 
 %description bin
 bin components for the gdk-pixbuf package.
@@ -175,7 +175,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1550635434
+export SOURCE_DATE_EPOCH=1552664683
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
@@ -197,10 +197,10 @@ export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -f
 make  %{?_smp_mflags}
 pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
-export ASFLAGS="$ASFLAGS --32"
-export CFLAGS="$CFLAGS -m32"
-export CXXFLAGS="$CXXFLAGS -m32"
-export LDFLAGS="$LDFLAGS -m32"
+export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
+export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32"
+export CXXFLAGS="${CXXFLAGS}${CXXFLAGS:+ }-m32"
+export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32"
 %reconfigure --disable-static --enable-introspection \
 --disable-installed-tests \
 --enable-nls \
@@ -225,7 +225,7 @@ cd ../build32;
 make VERBOSE=1 V=1 %{?_smp_mflags} check || : || :
 
 %install
-export SOURCE_DATE_EPOCH=1550635434
+export SOURCE_DATE_EPOCH=1552664683
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/gdk-pixbuf
 cp COPYING %{buildroot}/usr/share/package-licenses/gdk-pixbuf/COPYING
