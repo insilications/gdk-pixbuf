@@ -3,6 +3,10 @@
 # desirable. One name per line, no whitespace.
 #
 x11
+32x11
 libpng
+32libpng
 glib-2.0
+32glib-2.0
 libffi
+32libffi

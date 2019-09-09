@@ -6,6 +6,8 @@ qemu
 librsvg
 gobject-introspection-dev
 gobject-introspection
+glib-dev
+glib-dev32
 libjpeg-turbo-dev
 libjpeg-turbo-dev32
 libpng-dev32

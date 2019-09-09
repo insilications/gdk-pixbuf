@@ -1,3 +1,49 @@
+2.38.1 (stable)
+===
+ - Fix OOM in JPEG2000 loader [Ivan A. Melnikov, #107]
+ - Fix thumbnailing of animated GIFs [Debarshi Ray, #99]
+ - Multiple improvements to the GIF loader [Robert Ancell, !24, !28, !30, #22, #69 
+ - Fix build on Windows/MSYS2 [Christoph Reiter, !29]
+ - Fix soname versioning on macOS [Christoph Reiter, !23]
+ - Cross-compilation fixes for Android [Matthew Waters, #64]
+ - Fix building modules on macOS [Ignacio Casal Quinteiro, !18 and !19]
+ - Fix introspection generation [Iain Lane, #92]
+ - Fix error handling in PNG loader [Debarshi Ray, !16]
+ - Improve reproducibility of the build [Chris Lamb, !15]
+ - Speed up saving PNG files [Brion Vibber, #90]
+ - Add variables in the pkg-config files for binary utilities [Emmanuele Bassi, #88]
+ - Build fixes [Emmanuele Bassi, #88]
+
+2.38.0 (stable)
+===
+ - Documentation fixes
+
+2.37.92 (release candidate)
+===
+ - Ensure that GdkPixbuf's storage is safely handled [Federico Mena Quintero]
+ - Add test case for buffer overflow in pixdata loader [Bastien Nocera, #57]
+
+2.37.0 (development)
+===
+ - Rework relocation support for loaders cache on Windows [Christoph Reiter, #776081]
+ - Properly install test data [Emmanuele Bassi, Jeremy Bicha, #795527, #795210]
+ - Plug a memory leak when using GBytes [Vitaly Kirsanov, #787626]
+ - Fix introspection annotations [Iñaki García Etxebarria, #789935]
+ - Fix documentation building with X11 disabled [Quentin Glidic, #794872]
+ - Drop Autotools build and move to Meson [Emmanuele Bassi]
+ - Fix OOB error when dithering [Bert Pauline, #748211]
+ - Drop the MMX assembly optimizations for pixops [Emmanuele Bassi]
+ - Improve compatibility for the post-install script [Brendan L, #795705]
+ - Expose the dimensions of the original image from GdkPixbufLoader [Debarshi Ray, #778517]
+ - Improve thumbnailer implementation [Debarshi Ray, #778517]
+ - Make X11 a dependency if the `x11` build option is enabled [Emmanuele Bassi, #77]
+ - Generate separate introspection data for GdkPixdata API [Emmanuele Bassi, #72]
+ - Deprecate GDK_INTERP_HYPER [Emmanuele Bassi, #3]
+ - Avoid a deprecation warning with recent libjasper [Emmanuele Bassi, #73]
+ - Fix build on macOS [Emmanuele Bassi, !5]
+ - Fix build with Visual Studio [Chun-wei Fan, !8]
+ - Fix cross-compilation of Windows build on Linux [Benjamin Gilbert, !10]
+
 2.36.12
 =======
 * build: meson fixes for win32
