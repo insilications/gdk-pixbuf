@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.38.2
-Release  : 58
+Release  : 59
 URL      : https://download.gnome.org/sources/gdk-pixbuf/2.38/gdk-pixbuf-2.38.2.tar.xz
 Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.38/gdk-pixbuf-2.38.2.tar.xz
 Summary  : No detailed summary available
@@ -169,7 +169,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1568061712
+export SOURCE_DATE_EPOCH=1568063153
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -189,6 +189,13 @@ export LDFLAGS="${LDFLAGS}${LDFLAGS:+ }-m32 -mstackrealign"
 meson --libdir=lib32 --prefix=/usr --buildtype=plain -Dtiff=false  builddir
 ninja -v -C builddir
 popd
+
+%check
+export LANG=C.UTF-8
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+ninja -C builddir test ||:
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/gdk-pixbuf
