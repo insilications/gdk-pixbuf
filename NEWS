@@ -1,18 +1,22 @@
-2.38.1 (stable)
+2.40.0 (stable)
 ===
- - Fix OOM in JPEG2000 loader [Ivan A. Melnikov, #107]
- - Fix thumbnailing of animated GIFs [Debarshi Ray, #99]
- - Multiple improvements to the GIF loader [Robert Ancell, !24, !28, !30, #22, #69 
- - Fix build on Windows/MSYS2 [Christoph Reiter, !29]
- - Fix soname versioning on macOS [Christoph Reiter, !23]
- - Cross-compilation fixes for Android [Matthew Waters, #64]
- - Fix building modules on macOS [Ignacio Casal Quinteiro, !18 and !19]
- - Fix introspection generation [Iain Lane, #92]
- - Fix error handling in PNG loader [Debarshi Ray, !16]
- - Improve reproducibility of the build [Chris Lamb, !15]
- - Speed up saving PNG files [Brion Vibber, #90]
- - Add variables in the pkg-config files for binary utilities [Emmanuele Bassi, #88]
- - Build fixes [Emmanuele Bassi, #88]
+
+ - Allow creating a GdkPixbuf instance without any property [Federico Mena
+   Quintero, #91]
+
+2.39.2 (development)
+===
+
+ - Add gdk_pixbuf_init_modules() for applications with GdkPixbuf loader
+   modules in a separate directory [Bastien Nocera, bgo#786035]
+ - Add subproject fallback for dependencies [Nirbheek Chauhan]
+ - Handle large XPM without crashing [Bastien Nocera, #95]
+ - Use the appropriate gdk-pixbuf-query-loaders on install [Emmanuele
+   Bassi, #126]
+ - Disable deprecation warnings introduced by GLib 2.62
+ - Escape GIF version in error messages [Robert Ancell]
+ - Use the appropriate fallback for libpng on Windows [Chun-wei Fan]
+ - Render GIF frames on demand [Robert Ancell, #101]
 
 2.38.0 (stable)
 ===
