@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.40.0
-Release  : 60
+Release  : 61
 URL      : https://download.gnome.org/sources/gdk-pixbuf/2.40/gdk-pixbuf-2.40.0.tar.xz
 Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.40/gdk-pixbuf-2.40.0.tar.xz
 Summary  : No detailed summary available
@@ -37,6 +37,8 @@ BuildRequires : libpng-dev32
 BuildRequires : librsvg
 BuildRequires : librsvg-dev
 BuildRequires : librsvg-dev32
+BuildRequires : perl
+BuildRequires : pkg-config
 BuildRequires : pkgconfig(32glib-2.0)
 BuildRequires : pkgconfig(32libffi)
 BuildRequires : pkgconfig(32libpng)
@@ -44,9 +46,11 @@ BuildRequires : pkgconfig(32x11)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libffi)
 BuildRequires : pkgconfig(libpng)
+BuildRequires : pkgconfig(shared-mime-info)
 BuildRequires : pkgconfig(x11)
 BuildRequires : qemu
 BuildRequires : shared-mime-info
+BuildRequires : shared-mime-info-dev
 BuildRequires : zlib-dev
 BuildRequires : zlib-dev32
 Patch1: mime-fallback.patch
@@ -155,6 +159,7 @@ man components for the gdk-pixbuf package.
 
 %prep
 %setup -q -n gdk-pixbuf-2.40.0
+cd %{_builddir}/gdk-pixbuf-2.40.0
 %patch1 -p1
 pushd ..
 cp -a gdk-pixbuf-2.40.0 build32
@@ -165,7 +170,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1570545348
+export SOURCE_DATE_EPOCH=1580441099
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -176,7 +181,7 @@ export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-m
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Dtiff=false  builddir
 ninja -v -C builddir
-pushd ../build32
+pushd ../build32/
 export PKG_CONFIG_PATH="/usr/lib32/pkgconfig"
 export ASFLAGS="${ASFLAGS}${ASFLAGS:+ }--32"
 export CFLAGS="${CFLAGS}${CFLAGS:+ }-m32 -mstackrealign"
@@ -191,12 +196,14 @@ export LANG=C.UTF-8
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-ninja -C builddir test ||:
+meson test -C builddir || :
+cd ../build32;
+meson test -C builddir || : || :
 
 %install
 mkdir -p %{buildroot}/usr/share/package-licenses/gdk-pixbuf
-cp COPYING %{buildroot}/usr/share/package-licenses/gdk-pixbuf/COPYING
-pushd ../build32
+cp %{_builddir}/gdk-pixbuf-2.40.0/COPYING %{buildroot}/usr/share/package-licenses/gdk-pixbuf/01a6b4bf79aca9b556822601186afab86e8c4fbf
+pushd ../build32/
 DESTDIR=%{buildroot} ninja -C builddir install
 if [ -d  %{buildroot}/usr/lib32/pkgconfig ]
 then
@@ -212,12 +219,7 @@ cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/g
 LD_LIBRARY_PATH=%{buildroot}%{_libdir} %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*.so | sed "s@%{buildroot}@@g" > %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache
 rm %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so
 sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache > %{buildroot}/usr/lib32/gdk-pixbuf-2.0/2.10.0/loaders.cache
-## install_append end
-## install_append content
-cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/.
-LD_LIBRARY_PATH=%{buildroot}%{_libdir} %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*.so | sed "s@%{buildroot}@@g" > %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache
-rm %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so
-sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache > %{buildroot}/usr/lib32/gdk-pixbuf-2.0/2.10.0/loaders.cache
+
 ## install_append end
 
 %files
@@ -784,7 +786,7 @@ sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.ca
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/gdk-pixbuf/COPYING
+/usr/share/package-licenses/gdk-pixbuf/01a6b4bf79aca9b556822601186afab86e8c4fbf
 
 %files man
 %defattr(0644,root,root,0755)
