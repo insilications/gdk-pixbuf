@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.40.0
-Release  : 61
+Release  : 62
 URL      : https://download.gnome.org/sources/gdk-pixbuf/2.40/gdk-pixbuf-2.40.0.tar.xz
 Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.40/gdk-pixbuf-2.40.0.tar.xz
 Summary  : No detailed summary available
@@ -13,7 +13,6 @@ License  : LGPL-2.1
 Requires: gdk-pixbuf-bin = %{version}-%{release}
 Requires: gdk-pixbuf-data = %{version}-%{release}
 Requires: gdk-pixbuf-lib = %{version}-%{release}
-Requires: gdk-pixbuf-libexec = %{version}-%{release}
 Requires: gdk-pixbuf-license = %{version}-%{release}
 Requires: gdk-pixbuf-locales = %{version}-%{release}
 Requires: gdk-pixbuf-man = %{version}-%{release}
@@ -37,8 +36,6 @@ BuildRequires : libpng-dev32
 BuildRequires : librsvg
 BuildRequires : librsvg-dev
 BuildRequires : librsvg-dev32
-BuildRequires : perl
-BuildRequires : pkg-config
 BuildRequires : pkgconfig(32glib-2.0)
 BuildRequires : pkgconfig(32libffi)
 BuildRequires : pkgconfig(32libpng)
@@ -46,14 +43,13 @@ BuildRequires : pkgconfig(32x11)
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libffi)
 BuildRequires : pkgconfig(libpng)
-BuildRequires : pkgconfig(shared-mime-info)
 BuildRequires : pkgconfig(x11)
 BuildRequires : qemu
 BuildRequires : shared-mime-info
-BuildRequires : shared-mime-info-dev
 BuildRequires : zlib-dev
 BuildRequires : zlib-dev32
 Patch1: mime-fallback.patch
+Patch2: backport-missing-test.patch
 
 %description
 The code in this directory implements optimized, filtered scaling
@@ -63,7 +59,6 @@ for pixmap data.
 Summary: bin components for the gdk-pixbuf package.
 Group: Binaries
 Requires: gdk-pixbuf-data = %{version}-%{release}
-Requires: gdk-pixbuf-libexec = %{version}-%{release}
 Requires: gdk-pixbuf-license = %{version}-%{release}
 
 %description bin
@@ -107,7 +102,6 @@ dev32 components for the gdk-pixbuf package.
 Summary: lib components for the gdk-pixbuf package.
 Group: Libraries
 Requires: gdk-pixbuf-data = %{version}-%{release}
-Requires: gdk-pixbuf-libexec = %{version}-%{release}
 Requires: gdk-pixbuf-license = %{version}-%{release}
 
 %description lib
@@ -122,15 +116,6 @@ Requires: gdk-pixbuf-license = %{version}-%{release}
 
 %description lib32
 lib32 components for the gdk-pixbuf package.
-
-
-%package libexec
-Summary: libexec components for the gdk-pixbuf package.
-Group: Default
-Requires: gdk-pixbuf-license = %{version}-%{release}
-
-%description libexec
-libexec components for the gdk-pixbuf package.
 
 
 %package license
@@ -157,10 +142,20 @@ Group: Default
 man components for the gdk-pixbuf package.
 
 
+%package tests
+Summary: tests components for the gdk-pixbuf package.
+Group: Default
+Requires: gdk-pixbuf = %{version}-%{release}
+
+%description tests
+tests components for the gdk-pixbuf package.
+
+
 %prep
 %setup -q -n gdk-pixbuf-2.40.0
 cd %{_builddir}/gdk-pixbuf-2.40.0
 %patch1 -p1
+%patch2 -p1
 pushd ..
 cp -a gdk-pixbuf-2.40.0 build32
 popd
@@ -170,14 +165,14 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1580441099
+export SOURCE_DATE_EPOCH=1586874071
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
 export CFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -O3 -falign-functions=32 -ffat-lto-objects -flto=4 -fno-math-errno -fno-semantic-interposition -fno-trapping-math -fstack-protector-strong -mzero-caller-saved-regs=used "
 CFLAGS="$CFLAGS" CXXFLAGS="$CXXFLAGS" LDFLAGS="$LDFLAGS" meson --libdir=lib64 --prefix=/usr --buildtype=plain -Dtiff=false  builddir
 ninja -v -C builddir
@@ -241,29 +236,6 @@ sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.ca
 /usr/lib64/girepository-1.0/GdkPixbuf-2.0.typelib
 /usr/lib64/girepository-1.0/GdkPixdata-2.0.typelib
 /usr/share/gir-1.0/*.gir
-/usr/share/installed-tests/gdk-pixbuf/animation.test
-/usr/share/installed-tests/gdk-pixbuf/cve-2015-4491.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-area-updated.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-composite.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-construction.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-dpi.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-fail.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-gif-circular-table.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-gif.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-icc.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-icon-serialize.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-jpeg.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-pixdata.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-randomly-modified.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-readonly-to-mutable.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-reftest.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-resource.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-save.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-scale-two-step.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-scale.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-short-gif-write.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-stream.test
-/usr/share/installed-tests/gdk-pixbuf/pixbuf-threads.test
 /usr/share/thumbnailers/gdk-pixbuf-thumbnailer.thumbnailer
 
 %files dev
@@ -335,7 +307,16 @@ sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.ca
 /usr/lib32/libgdk_pixbuf_xlib-2.0.so.0
 /usr/lib32/libgdk_pixbuf_xlib-2.0.so.0.4000.0
 
-%files libexec
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/gdk-pixbuf/01a6b4bf79aca9b556822601186afab86e8c4fbf
+
+%files man
+%defattr(0644,root,root,0755)
+/usr/share/man/man1/gdk-pixbuf-csource.1
+/usr/share/man/man1/gdk-pixbuf-query-loaders.1
+
+%files tests
 %defattr(-,root,root,-)
 /usr/libexec/installed-tests/gdk-pixbuf/1_partyanimsm2.gif
 /usr/libexec/installed-tests/gdk-pixbuf/aero.gif
@@ -347,6 +328,7 @@ sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.ca
 /usr/libexec/installed-tests/gdk-pixbuf/bug775218.jpg
 /usr/libexec/installed-tests/gdk-pixbuf/bug775229.pixdata
 /usr/libexec/installed-tests/gdk-pixbuf/bug775693.pixdata
+/usr/libexec/installed-tests/gdk-pixbuf/circular-table.gif
 /usr/libexec/installed-tests/gdk-pixbuf/cve-2015-4491
 /usr/libexec/installed-tests/gdk-pixbuf/cve-2015-4491.bmp
 /usr/libexec/installed-tests/gdk-pixbuf/dpi.jpeg
@@ -783,15 +765,29 @@ sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.ca
 /usr/libexec/installed-tests/gdk-pixbuf/test-images/reftests/tga/gtk-logo-rle-32bpp-top-right.tga
 /usr/libexec/installed-tests/gdk-pixbuf/test-images/reftests/tga/gtk-logo-rle-32bpp-top-right.tga.ref.png
 /usr/libexec/installed-tests/gdk-pixbuf/test-images/reftests/tga/gtk-logo.ref.png
-
-%files license
-%defattr(0644,root,root,0755)
-/usr/share/package-licenses/gdk-pixbuf/01a6b4bf79aca9b556822601186afab86e8c4fbf
-
-%files man
-%defattr(0644,root,root,0755)
-/usr/share/man/man1/gdk-pixbuf-csource.1
-/usr/share/man/man1/gdk-pixbuf-query-loaders.1
+/usr/share/installed-tests/gdk-pixbuf/animation.test
+/usr/share/installed-tests/gdk-pixbuf/cve-2015-4491.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-area-updated.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-composite.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-construction.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-dpi.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-fail.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-gif-circular-table.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-gif.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-icc.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-icon-serialize.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-jpeg.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-pixdata.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-randomly-modified.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-readonly-to-mutable.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-reftest.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-resource.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-save.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-scale-two-step.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-scale.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-short-gif-write.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-stream.test
+/usr/share/installed-tests/gdk-pixbuf/pixbuf-threads.test
 
 %files locales -f gdk-pixbuf.lang
 %defattr(-,root,root,-)

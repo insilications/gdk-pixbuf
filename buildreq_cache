@@ -1,6 +1,2 @@
 2.40.0
 docbook-xml
-perl
-pkg-config
-pkgconfig(shared-mime-info)
-shared-mime-info-dev
