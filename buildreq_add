@@ -7,11 +7,6 @@ librsvg
 gobject-introspection-dev
 gobject-introspection
 glib-dev
-glib-dev32
 libjpeg-turbo-dev
-libjpeg-turbo-dev32
-libpng-dev32
 librsvg-dev
-librsvg-dev32
-zlib-dev32
 zlib-dev
