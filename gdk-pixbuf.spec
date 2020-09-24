@@ -4,7 +4,7 @@
 #
 Name     : gdk-pixbuf
 Version  : 2.40.0
-Release  : 63
+Release  : 64
 URL      : https://download.gnome.org/sources/gdk-pixbuf/2.40/gdk-pixbuf-2.40.0.tar.xz
 Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.40/gdk-pixbuf-2.40.0.tar.xz
 Summary  : No detailed summary available
