@@ -1,12 +1,10 @@
-#
-# This file contains extra pkgconfig build requirements that don't get picked up but are 
-# desirable. One name per line, no whitespace.
-#
-qemu
-librsvg
-gobject-introspection-dev
-gobject-introspection
+# This file contains additional build requirements that did not get
+# picked up automatically. One name per line, no whitespace.
 glib-dev
+gobject-introspection
+gobject-introspection-dev
 libjpeg-turbo-dev
+librsvg
 librsvg-dev
+qemu
 zlib-dev

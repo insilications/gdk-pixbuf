@@ -1,6 +1,8 @@
---- gdk-pixbuf-2.36.12/gdk-pixbuf/gdk-pixbuf-io.c~	2018-04-07 10:29:11.000000000 +0000
-+++ gdk-pixbuf-2.36.12/gdk-pixbuf/gdk-pixbuf-io.c	2019-01-15 16:48:14.917136550 +0000
-@@ -896,7 +896,10 @@
+diff --git a/gdk-pixbuf/gdk-pixbuf-io.c b/gdk-pixbuf/gdk-pixbuf-io.c
+index 40eb920..e8379e9 100644
+--- a/gdk-pixbuf/gdk-pixbuf-io.c
++++ b/gdk-pixbuf/gdk-pixbuf-io.c
+@@ -933,7 +933,10 @@ _gdk_pixbuf_get_module (guchar *buffer, guint size,
  		}
          }
          g_free (mime_type);
@@ -12,7 +14,7 @@
          gint score, best = 0;
  
          for (modules = get_file_formats (); modules; modules = g_slist_next (modules)) {
-@@ -913,7 +916,7 @@
+@@ -950,7 +953,7 @@ _gdk_pixbuf_get_module (guchar *buffer, guint size,
                  if (score >= 100) 
                          break;
          }
