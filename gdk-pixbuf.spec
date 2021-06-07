@@ -5,12 +5,12 @@
 %define keepstatic 1
 Name     : gdk-pixbuf
 Version  : 2.42.6
-Release  : 301
-URL      : https://download.gnome.org/sources/gdk-pixbuf/2.42/gdk-pixbuf-2.42.6.tar.xz
-Source0  : https://download.gnome.org/sources/gdk-pixbuf/2.42/gdk-pixbuf-2.42.6.tar.xz
-Summary  : GObject-Introspection based documentation generator
+Release  : 302
+URL      : file:///aot/build/clearlinux/packages/gdk-pixbuf/gdk-pixbuf-v2.42.6.tar.gz
+Source0  : file:///aot/build/clearlinux/packages/gdk-pixbuf/gdk-pixbuf-v2.42.6.tar.gz
+Summary  : No detailed summary available
 Group    : Development/Tools
-License  : Apache-2.0 GPL-2.0 LGPL-2.1
+License  : GPL-2.0 LGPL-2.1
 Requires: gdk-pixbuf-bin = %{version}-%{release}
 Requires: gdk-pixbuf-data = %{version}-%{release}
 Requires: gdk-pixbuf-lib = %{version}-%{release}
@@ -18,14 +18,42 @@ Requires: gdk-pixbuf-locales = %{version}-%{release}
 Requires: gdk-pixbuf-man = %{version}-%{release}
 Requires: librsvg-lib
 Requires: shared-mime-info
+BuildRequires : binutils-dev
+BuildRequires : boost-dev
 BuildRequires : buildreq-distutils3
 BuildRequires : buildreq-gnome
 BuildRequires : buildreq-meson
+BuildRequires : dbus
+BuildRequires : dbus-broker
+BuildRequires : dbus-dev
+BuildRequires : dbus-glib
+BuildRequires : dbus-glib-dev
 BuildRequires : docbook-xml
+BuildRequires : doxygen
 BuildRequires : glib-dev
+BuildRequires : glib-lib
 BuildRequires : glib-staticdev
 BuildRequires : gobject-introspection
 BuildRequires : gobject-introspection-dev
+BuildRequires : graphviz
+BuildRequires : graphviz-dev
+BuildRequires : grep
+BuildRequires : gtk+-data
+BuildRequires : gtk+-dev
+BuildRequires : gtk+-lib
+BuildRequires : gtk-doc
+BuildRequires : gtk-doc-dev
+BuildRequires : gtk3-dev
+BuildRequires : gtk3-lib
+BuildRequires : gtk4
+BuildRequires : gtk4-dev
+BuildRequires : gtk4-lib
+BuildRequires : libX11-data
+BuildRequires : libX11-dev
+BuildRequires : libX11-lib
+BuildRequires : libXrender-dev
+BuildRequires : libdrm-dev
+BuildRequires : libdrm-staticdev
 BuildRequires : libffi-dev
 BuildRequires : libffi-staticdev
 BuildRequires : libjpeg-turbo-dev
@@ -35,17 +63,62 @@ BuildRequires : libpng-staticdev
 BuildRequires : librsvg
 BuildRequires : librsvg-dev
 BuildRequires : librsvg-staticdev
+BuildRequires : libxcb-dev
+BuildRequires : libxslt-bin
+BuildRequires : lzo
+BuildRequires : lzo-dev
+BuildRequires : lzo-staticdev
+BuildRequires : mesa-dev
+BuildRequires : mm-common
+BuildRequires : mm-common-dev
+BuildRequires : pixman-dev
+BuildRequires : pixman-staticdev
+BuildRequires : pkg-config
 BuildRequires : pkgconfig(glib-2.0)
 BuildRequires : pkgconfig(libffi)
 BuildRequires : pkgconfig(libpng)
 BuildRequires : pkgconfig(x11)
+BuildRequires : python-graphviz
 BuildRequires : qemu
 BuildRequires : shared-mime-info
+BuildRequires : systemd-dev
 BuildRequires : tiff
 BuildRequires : tiff-dev
 BuildRequires : tiff-staticdev
+BuildRequires : xauth
+BuildRequires : xcb-proto
+BuildRequires : xcb-proto-dev
+BuildRequires : xcb-util-cursor-dev
+BuildRequires : xcb-util-dev
+BuildRequires : xcb-util-keysyms-dev
+BuildRequires : xcb-util-renderutil-dev
+BuildRequires : xcb-util-wm-dev
+BuildRequires : xcb-util-xrm-dev
+BuildRequires : xclip
+BuildRequires : xdg-dbus-proxy
+BuildRequires : xdg-desktop-portal
+BuildRequires : xdg-desktop-portal-dev
+BuildRequires : xdg-desktop-portal-gtk
+BuildRequires : xdg-desktop-portal-kde
+BuildRequires : xdg-user-dirs
+BuildRequires : xdg-user-dirs-gtk
+BuildRequires : xdg-utils
+BuildRequires : xdotool
+BuildRequires : xdpyinfo
+BuildRequires : xf86-input-libinput
+BuildRequires : xf86-video-amdgpu
+BuildRequires : xf86-video-ati
+BuildRequires : xf86-video-fbdev
+BuildRequires : xf86-video-nouveau
+BuildRequires : xf86-video-qxl
+BuildRequires : xf86-video-vboxvideo
+BuildRequires : xf86-video-vesa
+BuildRequires : xf86-video-vmware
+BuildRequires : zlib
 BuildRequires : zlib-dev
 BuildRequires : zlib-staticdev
+BuildRequires : zstd-dev
+BuildRequires : zstd-staticdev
 # Suppress stripping binaries
 %define __strip /bin/true
 %define debug_package %{nil}
@@ -120,8 +193,8 @@ staticdev components for the gdk-pixbuf package.
 
 
 %prep
-%setup -q -n gdk-pixbuf-2.42.6
-cd %{_builddir}/gdk-pixbuf-2.42.6
+%setup -q -n gdk-pixbuf
+cd %{_builddir}/gdk-pixbuf
 %patch1 -p1
 
 %build
@@ -130,7 +203,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1623061068
+export SOURCE_DATE_EPOCH=1623076398
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -190,7 +263,7 @@ export CXXFLAGS="${CXXFLAGS_GENERATE}"
 export FFLAGS="${FFLAGS_GENERATE}"
 export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
-meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both -Dtiff=true \
+meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both -Dtiff=enabled \
 -Dinstalled_tests=false  builddir
 ninja --verbose %{?_smp_mflags} -v -C builddir
 
@@ -201,9 +274,17 @@ export CXXFLAGS="${CXXFLAGS_USE}"
 export FFLAGS="${FFLAGS_USE}"
 export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
-meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both -Dtiff=true \
+meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both -Dtiff=enabled \
 -Dinstalled_tests=false  builddir
 ninja --verbose %{?_smp_mflags} -v -C builddir
+
+%check
+export LANG=C.UTF-8
+unset http_proxy
+unset https_proxy
+unset no_proxy
+export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
+meson test -C builddir || :
 
 %install
 DESTDIR=%{buildroot} ninja -C builddir install
@@ -266,7 +347,7 @@ rm %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so
 %files lib
 %defattr(-,root,root,-)
 /usr/lib64/libgdk_pixbuf-2.0.so.0
-/usr/lib64/libgdk_pixbuf-2.0.so.0.4200.6
+/usr/lib64/libgdk_pixbuf-2.0.so.0.4200.7
 
 %files man
 %defattr(0644,root,root,0755)
