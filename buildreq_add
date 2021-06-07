@@ -1,10 +1,23 @@
 # This file contains additional build requirements that did not get
 # picked up automatically. One name per line, no whitespace.
+buildreq-distutils3
+buildreq-gnome
+buildreq-meson
+docbook-xml
 glib-dev
+glib-staticdev
 gobject-introspection
 gobject-introspection-dev
+libffi-dev
+libffi-staticdev
 libjpeg-turbo-dev
+libjpeg-turbo-staticdev
+libpng-dev
+libpng-staticdev
 librsvg
 librsvg-dev
+librsvg-staticdev
 qemu
+shared-mime-info
 zlib-dev
+zlib-staticdev
