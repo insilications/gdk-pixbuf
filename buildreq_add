@@ -21,3 +21,6 @@ qemu
 shared-mime-info
 zlib-dev
 zlib-staticdev
+tiff
+tiff-dev
+tiff-staticdev
