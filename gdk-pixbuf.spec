@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : gdk-pixbuf
 Version  : 2.42.6
-Release  : 302
+Release  : 303
 URL      : file:///aot/build/clearlinux/packages/gdk-pixbuf/gdk-pixbuf-v2.42.6.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/gdk-pixbuf/gdk-pixbuf-v2.42.6.tar.gz
 Summary  : No detailed summary available
@@ -203,7 +203,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1623076398
+export SOURCE_DATE_EPOCH=1628484755
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -258,17 +258,23 @@ export PATH="$PATH:/usr/local/cuda/bin:/usr/nvidia/bin:/usr/bin/haswell:/usr/bin
 export CPATH="$CPATH:/usr/local/cuda/include"
 #
 ## altflags_pgo end
+if [ ! -f statuspgo ]; then
+echo PGO Phase 1
 export CFLAGS="${CFLAGS_GENERATE}"
 export CXXFLAGS="${CXXFLAGS_GENERATE}"
 export FFLAGS="${FFLAGS_GENERATE}"
 export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
-meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both -Dtiff=enabled \
--Dinstalled_tests=false  builddir
+meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -Dtiff=enabled \
+-Dinstalled_tests=false builddir
 ninja --verbose %{?_smp_mflags} -v -C builddir
 
 meson test --verbose --num-processes 16 -C builddir || :
 find builddir/ -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print  || :
+echo USED > statuspgo
+fi
+if [ -f statuspgo ]; then
+echo PGO Phase 2
 export CFLAGS="${CFLAGS_USE}"
 export CXXFLAGS="${CXXFLAGS_USE}"
 export FFLAGS="${FFLAGS_USE}"
@@ -277,6 +283,8 @@ export LDFLAGS="${LDFLAGS_USE}"
 meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both -Dtiff=enabled \
 -Dinstalled_tests=false  builddir
 ninja --verbose %{?_smp_mflags} -v -C builddir
+fi
+
 
 %check
 export LANG=C.UTF-8

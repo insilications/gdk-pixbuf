@@ -13,7 +13,6 @@ clutter-gtk-dev
 cogl-dev
 colord-gtk-dev
 compat-gtksourceview-soname3-dev
-compat-libhandy-0.0-dev
 devhelp-dev
 eog-dev
 evince-dev
@@ -75,6 +74,7 @@ libgweather-dev
 libhandy-dev
 libindicator-dev
 libmediaart
+libmediaart-dev
 libnotify-dev
 libpeas-dev
 librsvg-dev
