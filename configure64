@@ -1,2 +1,8 @@
 -Dtiff=enabled
--Dinstalled_tests=false
+-Djpeg=enabled
+-Dpng=enabled
+-Dintrospection=enabled
+-Dgtk_doc=false
+-Ddocs=false
+-Dbuiltin_loaders=all
+-Dinstalled_tests=true

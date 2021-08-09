@@ -266,7 +266,7 @@ export FFLAGS="${FFLAGS_GENERATE}"
 export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
 meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -Dtiff=enabled \
--Dinstalled_tests=false builddir
+-Dinstalled_tests=true builddir
 ninja --verbose %{?_smp_mflags} -v -C builddir
 
 meson test --verbose --num-processes 16 -C builddir || :

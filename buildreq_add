@@ -53,6 +53,9 @@ lzo-staticdev
 mesa-dev
 mm-common
 mm-common-dev
+openjpeg
+openjpeg-dev
+openjpeg-staticdev
 pixman-dev
 pixman-staticdev
 pkg-config
