@@ -5,11 +5,14 @@ boost-dev
 buildreq-distutils3
 buildreq-gnome
 buildreq-meson
+cairo-dev
+cairo-staticdev
 dbus
 dbus-broker
 dbus-dev
 dbus-glib
 dbus-glib-dev
+docbook-utils
 docbook-xml
 doxygen
 glib-dev
@@ -46,7 +49,9 @@ libX11-dev
 libX11-lib
 libxcb-dev
 libXrender-dev
+libxslt
 libxslt-bin
+libxslt-dev
 lzo
 lzo-dev
 lzo-staticdev
@@ -62,6 +67,8 @@ pkg-config
 python-graphviz
 qemu
 shared-mime-info
+shared-mime-info-dev
+systemd
 systemd-dev
 tiff
 tiff-dev

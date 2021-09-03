@@ -4,5 +4,4 @@
 -Dintrospection=enabled
 -Dgtk_doc=false
 -Ddocs=false
--Dbuiltin_loaders=all
--Dinstalled_tests=true
+-Dinstalled_tests=false

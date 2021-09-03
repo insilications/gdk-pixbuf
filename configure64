@@ -3,6 +3,6 @@
 -Dpng=enabled
 -Dintrospection=enabled
 -Dgtk_doc=false
+-Dman=true
 -Ddocs=false
--Dbuiltin_loaders=all
--Dinstalled_tests=true
+-Dinstalled_tests=false

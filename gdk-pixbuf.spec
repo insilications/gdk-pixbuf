@@ -5,7 +5,7 @@
 %define keepstatic 1
 Name     : gdk-pixbuf
 Version  : 2.42.6
-Release  : 303
+Release  : 304
 URL      : file:///aot/build/clearlinux/packages/gdk-pixbuf/gdk-pixbuf-v2.42.6.tar.gz
 Source0  : file:///aot/build/clearlinux/packages/gdk-pixbuf/gdk-pixbuf-v2.42.6.tar.gz
 Summary  : No detailed summary available
@@ -23,11 +23,14 @@ BuildRequires : boost-dev
 BuildRequires : buildreq-distutils3
 BuildRequires : buildreq-gnome
 BuildRequires : buildreq-meson
+BuildRequires : cairo-dev
+BuildRequires : cairo-staticdev
 BuildRequires : dbus
 BuildRequires : dbus-broker
 BuildRequires : dbus-dev
 BuildRequires : dbus-glib
 BuildRequires : dbus-glib-dev
+BuildRequires : docbook-utils
 BuildRequires : docbook-xml
 BuildRequires : doxygen
 BuildRequires : glib-dev
@@ -64,13 +67,18 @@ BuildRequires : librsvg
 BuildRequires : librsvg-dev
 BuildRequires : librsvg-staticdev
 BuildRequires : libxcb-dev
+BuildRequires : libxslt
 BuildRequires : libxslt-bin
+BuildRequires : libxslt-dev
 BuildRequires : lzo
 BuildRequires : lzo-dev
 BuildRequires : lzo-staticdev
 BuildRequires : mesa-dev
 BuildRequires : mm-common
 BuildRequires : mm-common-dev
+BuildRequires : openjpeg
+BuildRequires : openjpeg-dev
+BuildRequires : openjpeg-staticdev
 BuildRequires : pixman-dev
 BuildRequires : pixman-staticdev
 BuildRequires : pkg-config
@@ -81,6 +89,8 @@ BuildRequires : pkgconfig(x11)
 BuildRequires : python-graphviz
 BuildRequires : qemu
 BuildRequires : shared-mime-info
+BuildRequires : shared-mime-info-dev
+BuildRequires : systemd
 BuildRequires : systemd-dev
 BuildRequires : tiff
 BuildRequires : tiff-dev
@@ -203,7 +213,7 @@ unset https_proxy
 unset no_proxy
 export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1628484755
+export SOURCE_DATE_EPOCH=1628513296
 export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
@@ -266,10 +276,16 @@ export FFLAGS="${FFLAGS_GENERATE}"
 export FCFLAGS="${FCFLAGS_GENERATE}"
 export LDFLAGS="${LDFLAGS_GENERATE}"
 meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both  -Dtiff=enabled \
--Dinstalled_tests=true builddir
+-Djpeg=enabled \
+-Dpng=enabled \
+-Dintrospection=enabled \
+-Dgtk_doc=false \
+-Dman=true \
+-Ddocs=false \
+-Dinstalled_tests=false builddir
 ninja --verbose %{?_smp_mflags} -v -C builddir
 
-meson test --verbose --num-processes 16 -C builddir || :
+meson test --verbose --num-processes 1 -C builddir || :
 find builddir/ -type f,l -not -name '*.gcno' -not -name 'statuspgo*' -delete -print  || :
 echo USED > statuspgo
 fi
@@ -281,28 +297,26 @@ export FFLAGS="${FFLAGS_USE}"
 export FCFLAGS="${FCFLAGS_USE}"
 export LDFLAGS="${LDFLAGS_USE}"
 meson --libdir=lib64 --prefix=/usr --buildtype=release -Ddefault_library=both -Dtiff=enabled \
+-Djpeg=enabled \
+-Dpng=enabled \
+-Dintrospection=enabled \
+-Dgtk_doc=false \
+-Ddocs=false \
 -Dinstalled_tests=false  builddir
 ninja --verbose %{?_smp_mflags} -v -C builddir
 fi
 
 
-%check
-export LANG=C.UTF-8
-unset http_proxy
-unset https_proxy
-unset no_proxy
-export SSL_CERT_FILE=/var/cache/ca-certs/anchors/ca-certificates.crt
-meson test -C builddir || :
-
 %install
 DESTDIR=%{buildroot} ninja -C builddir install
 %find_lang gdk-pixbuf
 ## install_append content
-cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/.
-LD_LIBRARY_PATH=%{buildroot}%{_libdir} %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*.so | sed "s@%{buildroot}@@g" > %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache
-rm %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so
+cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/. || :
+mkdir -p %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/ || :
+# LD_LIBRARY_PATH=%{buildroot}%{_libdir} GDK_PIXBUF_MODULE_FILE=%{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders | sed "s@%{buildroot}@@g" > %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache || :
+LD_LIBRARY_PATH=%{buildroot}%{_libdir} GDK_PIXBUF_MODULE_FILE=%{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*.so | sed "s@%{buildroot}@@g" > %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache || :
+rm %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so || :
 #sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache > %{buildroot}/usr/lib32/gdk-pixbuf-2.0/2.10.0/loaders.cache
-
 ## install_append end
 
 %files

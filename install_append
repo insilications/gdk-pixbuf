@@ -1,5 +1,6 @@
-cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/. 
-LD_LIBRARY_PATH=%{buildroot}%{_libdir} %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*.so | sed "s@%{buildroot}@@g" > %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache 
-rm %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so
+cp %{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/. || :
+mkdir -p %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/ || :
+# LD_LIBRARY_PATH=%{buildroot}%{_libdir} GDK_PIXBUF_MODULE_FILE=%{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders | sed "s@%{buildroot}@@g" > %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache || :
+LD_LIBRARY_PATH=%{buildroot}%{_libdir} GDK_PIXBUF_MODULE_FILE=%{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache %{buildroot}%{_bindir}/gdk-pixbuf-query-loaders %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*.so | sed "s@%{buildroot}@@g" > %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache || :
+rm %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders/lib*svg*.so || :
 #sed -e 's/lib64/lib32/g' %{buildroot}%{_libdir}/gdk-pixbuf-2.0/2.10.0/loaders.cache > %{buildroot}/usr/lib32/gdk-pixbuf-2.0/2.10.0/loaders.cache 
-
